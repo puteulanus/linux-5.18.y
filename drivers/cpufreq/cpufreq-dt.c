@@ -319,15 +319,19 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
 {
 	struct cpufreq_dt_platform_data *data = dev_get_platdata(&pdev->dev);
 	int ret, cpu;
+	
+	dev_err(&pdev->dev, "Start probe cpufreq_dt \n");
 
 	/* Request resources early so we can return in case of -EPROBE_DEFER */
 	for_each_possible_cpu(cpu) {
 		ret = dt_cpufreq_early_init(&pdev->dev, cpu);
+		dev_err(&pdev->dev, "for_each_possible_cpu: %d\n", ret);
 		if (ret)
 			goto err;
 	}
 
 	if (data) {
+		dev_err(&pdev->dev, "data is true\n");
 		if (data->have_governor_per_policy)
 			dt_cpufreq_driver.flags |= CPUFREQ_HAVE_GOVERNOR_PER_POLICY;
 
@@ -349,6 +353,7 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
 	return 0;
 err:
 	dt_cpufreq_release();
+	dev_err(&pdev->dev, "cpufreq probe goto err\n");
 	return ret;
 }
 
