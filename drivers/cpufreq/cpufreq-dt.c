@@ -325,7 +325,7 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
 	dev_err(&pdev->dev, "Start probe cpufreq_dt \n");
 	
 	if (!get_cpu_device(0)) {
-		dev_err(&dev, "get cpu device test return error\n");
+		dev_err(&pdev, "get cpu device test return error\n");
 	}
 
 	/* Request resources early so we can return in case of -EPROBE_DEFER */
