@@ -202,7 +202,7 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
 
 	cpu_dev = get_cpu_device(cpu);
 	if (!cpu_dev) {
-		dev_err(&cpu_dev, "get cpu device return error\n");
+		dev_err(cpu_dev, "get cpu device return error\n");
 		return -EPROBE_DEFER;
 	}
 
