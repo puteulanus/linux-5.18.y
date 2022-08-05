@@ -1993,10 +1993,14 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
 	struct opp_table *opp_table;
 	struct regulator *reg;
 	int ret, i;
+	
+	pr_err("start _add_opp_table\n");
 
 	opp_table = _add_opp_table(dev, false);
-	if (IS_ERR(opp_table))
+	if (IS_ERR(opp_table)) {
+		pr_err("_add_opp_table error\n");
 		return opp_table;
+	}
 
 	/* This should be called before OPPs are initialized */
 	if (WARN_ON(!list_empty(&opp_table->opp_list))) {
@@ -2018,8 +2022,10 @@ struct opp_table *dev_pm_opp_set_regulators(struct device *dev,
 
 	for (i = 0; i < count; i++) {
 		reg = regulator_get_optional(dev, names[i]);
+		pr_err("regulator_get_optional run\n");
 		if (IS_ERR(reg)) {
 			ret = PTR_ERR(reg);
+			pr_err("regulator_get_optional error\n");
 			if (ret != -EPROBE_DEFER)
 				dev_err(dev, "%s: no regulator (%s) found: %d\n",
 					__func__, names[i], ret);
@@ -2054,8 +2060,10 @@ free_regulators:
 	kfree(opp_table->regulators);
 	opp_table->regulators = NULL;
 	opp_table->regulator_count = -1;
+	pr_err("goto free_regulators in dev_pm_opp_set_regulators\n");
 err:
 	dev_pm_opp_put_opp_table(opp_table);
+	pr_err("goto err in dev_pm_opp_set_regulators\n");
 
 	return ERR_PTR(ret);
 }
