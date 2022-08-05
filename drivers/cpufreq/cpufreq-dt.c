@@ -202,11 +202,8 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
 	if (cpufreq_dt_find_data(cpu))
 		return 0;
 
-	pr_err("Start get_cpu_device test\n");
-
 	cpu_dev = get_cpu_device(cpu);
 	if (!cpu_dev) {
-		pr_err("get cpu device return error\n");
 		return -EPROBE_DEFER;
 	}
 	
@@ -221,6 +218,8 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
 
 	cpumask_set_cpu(cpu, priv->cpus);
 	priv->cpu_dev = cpu_dev;
+	
+	pr_err("priv set cpu_dev success\n");
 
 	/*
 	 * OPP layer will be taking care of regulators now, but it needs to know
@@ -232,6 +231,7 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
 							    1);
 		if (IS_ERR(priv->opp_table)) {
 			ret = PTR_ERR(priv->opp_table);
+			dev_err(cpu_dev, "dev_pm_opp_set_regulators return error: %d\n", ret);
 			if (ret != -EPROBE_DEFER)
 				dev_err(cpu_dev, "failed to set regulators: %d\n",
 					ret);
@@ -329,12 +329,6 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
 	int ret, cpu;
 	
 	dev_err(&pdev->dev, "Start probe cpufreq_dt \n");
-	
-	dev_err(&pdev->dev, "Start cpu device test \n");
-	if (!get_cpu_device(0)) {
-		dev_err(&pdev->dev, "get cpu device test return error\n");
-	}
-	dev_err(&pdev->dev, "End cpu device test \n");
 
 	/* Request resources early so we can return in case of -EPROBE_DEFER */
 	for_each_possible_cpu(cpu) {
