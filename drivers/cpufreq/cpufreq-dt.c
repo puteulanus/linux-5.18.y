@@ -195,16 +195,22 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
 	bool fallback = false;
 	const char *reg_name;
 	int ret;
+	
+	pr_err("Start dt_cpufreq_early_init\n");
 
 	/* Check if this CPU is already covered by some other policy */
 	if (cpufreq_dt_find_data(cpu))
 		return 0;
 
+	pr_err("Start get_cpu_device test\n");
+
 	cpu_dev = get_cpu_device(cpu);
 	if (!cpu_dev) {
-		dev_err(cpu_dev, "get cpu device return error\n");
+		pr_err("get cpu device return error\n");
 		return -EPROBE_DEFER;
 	}
+	
+	pr_err("Pass get_cpu_device test\n");
 
 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv)
@@ -324,9 +330,11 @@ static int dt_cpufreq_probe(struct platform_device *pdev)
 	
 	dev_err(&pdev->dev, "Start probe cpufreq_dt \n");
 	
+	dev_err(&pdev->dev, "Start cpu device test \n");
 	if (!get_cpu_device(0)) {
 		dev_err(&pdev->dev, "get cpu device test return error\n");
 	}
+	dev_err(&pdev->dev, "End cpu device test \n");
 
 	/* Request resources early so we can return in case of -EPROBE_DEFER */
 	for_each_possible_cpu(cpu) {
