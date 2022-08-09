@@ -10712,13 +10712,25 @@ rtl8125_init_software_variable(struct net_device *dev)
         if (tp->HwSuppRssVer > 0)
                 tp->EnableRss = 1;
 #else
+            netif_info(tp, probe, dev, "Start RSS checking\n");
         if (tp->HwSuppRssVer > 0) {
                 u8 rss_queue_num = netif_get_num_default_rss_queues();
+                netif_info(tp, probe, dev, "netif_get_num_default_rss_queues %d\n",
+                           rss_queue_num);
                 tp->num_rx_rings = (tp->HwSuppNumRxQueues > rss_queue_num)?
                                    rss_queue_num : tp->HwSuppNumRxQueues;
+                netif_info(tp, probe, dev, "HwSuppNumRxQueues %d\n",
+                           tp->HwSuppNumRxQueues);
+                netif_info(tp, probe, dev, "num_rx_rings %d\n",
+                           tp->num_rx_rings);
 
                 if (!(tp->num_rx_rings >= 2 && tp->irq_nvecs >= tp->num_rx_rings))
                         tp->num_rx_rings = 1;
+
+                netif_info(tp, probe, dev, "irq_nvecs %d\n",
+                           tp->irq_nvecs);
+                netif_info(tp, probe, dev, "num_rx_rings %d\n",
+                           tp->num_rx_rings);
 
                 if (tp->num_rx_rings >= 2)
                         tp->EnableRss = 1;
