@@ -10734,6 +10734,8 @@ rtl8125_init_software_variable(struct net_device *dev)
 
                 if (tp->num_rx_rings >= 2)
                         tp->EnableRss = 1;
+                netif_info(tp, probe, dev, "EnableRss %d\n",
+                           tp->EnableRss);
         }
 #endif
 #endif
@@ -12236,6 +12238,7 @@ rtl8125_link_timer(struct timer_list *t)
 int
 rtl8125_enable_msix(struct rtl8125_private *tp)
 {
+        netif_info(tp, probe, dev, "rtl8125_enable_msix called \n");
         int i, nvecs = 0;
         struct msix_entry msix_ent[R8125_MAX_MSIX_VEC];
         //struct net_device *dev = tp->dev;
@@ -12254,7 +12257,7 @@ rtl8125_enable_msix(struct rtl8125_private *tp)
         for (i = 0; i < nvecs; i++) {
                 struct r8125_irq *irq = &tp->irq_tbl[i];
                 irq->vector = msix_ent[i].vector;
-                //snprintf(irq->name, len, "%s-%d", dev->name, i);
+                snprintf(irq->name, len, "%s-%d", dev->name, i);
                 //irq->handler = rtl8125_interrupt_msix;
         }
 

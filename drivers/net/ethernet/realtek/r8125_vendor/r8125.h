@@ -453,7 +453,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
 #define R8125_MAX_MSIX_VEC_8125B   32
 #define R8125_MIN_MSIX_VEC_8125B   17
-#define R8125_MAX_MSIX_VEC   32
+#define R8125_MAX_MSIX_VEC   8
 #define R8125_MAX_RX_QUEUES_VEC_V3 (16)
 
 #define RTL8125_TX_TIMEOUT  (6 * HZ)
