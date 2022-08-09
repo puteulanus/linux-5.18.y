@@ -12238,11 +12238,11 @@ rtl8125_link_timer(struct timer_list *t)
 int
 rtl8125_enable_msix(struct rtl8125_private *tp)
 {
-        netif_info(tp, probe, dev, "rtl8125_enable_msix called \n");
+        netif_info(tp, probe, tp->dev, "rtl8125_enable_msix called \n");
         int i, nvecs = 0;
         struct msix_entry msix_ent[R8125_MAX_MSIX_VEC];
-        //struct net_device *dev = tp->dev;
-        //const int len = sizeof(tp->irq_tbl[0].name);
+        struct net_device *dev = tp->dev;
+        const int len = sizeof(tp->irq_tbl[0].name);
 
         for (i = 0; i < R8125_MAX_MSIX_VEC; i++) {
                 msix_ent[i].entry = i;
