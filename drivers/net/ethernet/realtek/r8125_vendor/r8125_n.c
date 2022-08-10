@@ -12315,10 +12315,14 @@ static int rtl8125_try_msi(struct rtl8125_private *tp)
                  pci_dev_msi_enabled(pdev))
                 msi |= RTL_FEATURE_MSI;
 #elif LINUX_VERSION_CODE > KERNEL_VERSION(2,6,13)
-        if ((nvecs = rtl8125_enable_msix(tp)) > 0)
+        if ((nvecs = rtl8125_enable_msix(tp)) > 0) {
                 msi |= RTL_FEATURE_MSIX;
-        else if (!pci_enable_msi(pdev))
+                dev_info(&pdev->dev, "MSI-X enabled\n");
+        }
+        else if (!pci_enable_msi(pdev)) {
                 msi |= RTL_FEATURE_MSI;
+                dev_info(&pdev->dev, "MSI enabled\n");
+        }
 #endif
         if (!(msi & (RTL_FEATURE_MSI | RTL_FEATURE_MSIX)))
                 dev_info(&pdev->dev, "no MSI/MSI-X. Back to INTx.\n");
