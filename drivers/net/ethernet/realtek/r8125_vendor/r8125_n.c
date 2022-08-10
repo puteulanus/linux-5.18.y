@@ -13021,6 +13021,8 @@ static int rtl8125_alloc_patch_mem(struct rtl8125_private *tp)
                                              SHORT_PACKET_PADDING_BUF_SIZE,
                                              &tp->ShortPacketEmptyBufferPhy,
                                              GFP_KERNEL);
+        printk(KERN_INFO "tp->ShortPacketEmptyBuffer is %d\n",
+                               tp->ShortPacketEmptyBuffer);
                 if (!tp->ShortPacketEmptyBuffer)
                         return -1;
 
@@ -13534,6 +13536,11 @@ rtl8125_hw_config(struct net_device *dev)
         rtl8125_hw_clear_timer_int(dev);
 
         rtl8125_hw_clear_int_miti(dev);
+
+        printk(KERN_INFO "hw config RequireRduNonStopPatch %d\n",
+                               tp->RequireRduNonStopPatch);
+        printk(KERN_INFO "hw config ShortPacketEmptyBuffer %d\n",
+                               tp->ShortPacketEmptyBuffer);
 
         if (tp->RequireRduNonStopPatch &&
             tp->ShortPacketEmptyBuffer) {
