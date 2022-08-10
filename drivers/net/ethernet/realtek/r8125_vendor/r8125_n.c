@@ -12249,8 +12249,11 @@ rtl8125_enable_msix(struct rtl8125_private *tp)
                 msix_ent[i].vector = 0;
         }
 
+        netif_info(tp, probe, tp->dev, "irq_nvecs min %d\n", tp->min_irq_nvecs);
+        netif_info(tp, probe, tp->dev, "irq_nvecs max %d\n", tp->max_irq_nvecs);
         nvecs = pci_enable_msix_range(tp->pci_dev, msix_ent,
                                       tp->min_irq_nvecs, tp->max_irq_nvecs);
+        netif_info(tp, probe, tp->dev, "after rtl8125_enable_msix called, nvecs %d\n", nvecs);
         if (nvecs < 0)
                 goto out;
 
