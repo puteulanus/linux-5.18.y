@@ -12240,6 +12240,8 @@ rtl8125_enable_msix(struct rtl8125_private *tp)
         struct msix_entry msix_ent[R8125_MAX_MSIX_VEC];
         //struct net_device *dev = tp->dev;
         //const int len = sizeof(tp->irq_tbl[0].name);
+        pci_disable_msix(tp->pci_dev);
+        return -1;
 
         for (i = 0; i < R8125_MAX_MSIX_VEC; i++) {
                 msix_ent[i].entry = i;
