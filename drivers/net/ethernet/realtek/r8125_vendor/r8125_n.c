@@ -12307,7 +12307,7 @@ static int rtl8125_try_msi(struct rtl8125_private *tp)
         //         msi |= RTL_FEATURE_MSIX;
         // else if ((nvecs = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES)) > 0 &&
                 //  pci_dev_msi_enabled(pdev))
-                nvecs = pci_alloc_irq_vectors(pdev, 1, 8, PCI_IRQ_MSI);
+                nvecs = pci_alloc_irq_vectors(pdev, 1, 8, PCI_IRQ_LEGACY);
                 printk(KERN_INFO "pci_alloc_irq_vectors return %d\n", nvecs);
                 msi |= RTL_FEATURE_MSI;
 #elif LINUX_VERSION_CODE > KERNEL_VERSION(2,6,13)
