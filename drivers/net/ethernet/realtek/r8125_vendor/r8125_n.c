@@ -12320,7 +12320,7 @@ static int rtl8125_try_msi(struct rtl8125_private *tp)
                 dev_info(&pdev->dev, "no MSI/MSI-X. Back to INTx.\n");
 
         if (!(msi & RTL_FEATURE_MSIX) || nvecs < 1)
-                nvecs = 1;
+                nvecs = 2;
 
         tp->irq_nvecs = nvecs;
 
