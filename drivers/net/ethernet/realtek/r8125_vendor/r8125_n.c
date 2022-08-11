@@ -12303,10 +12303,11 @@ static int rtl8125_try_msi(struct rtl8125_private *tp)
 #endif
 
 #if defined(RTL_USE_NEW_INTR_API)
-        if ((nvecs = pci_alloc_irq_vectors(pdev, tp->min_irq_nvecs, tp->max_irq_nvecs, PCI_IRQ_MSIX)) > 0)
-                msi |= RTL_FEATURE_MSIX;
-        else if ((nvecs = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES)) > 0 &&
-                 pci_dev_msi_enabled(pdev))
+        // if ((nvecs = pci_alloc_irq_vectors(pdev, tp->min_irq_nvecs, tp->max_irq_nvecs, PCI_IRQ_MSIX)) > 0)
+        //         msi |= RTL_FEATURE_MSIX;
+        // else if ((nvecs = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES)) > 0 &&
+                //  pci_dev_msi_enabled(pdev))
+                nvecs = pci_alloc_irq_vectors(pdev, 1, 2, PCI_IRQ_MSI)
                 msi |= RTL_FEATURE_MSI;
 #elif LINUX_VERSION_CODE > KERNEL_VERSION(2,6,13)
         if ((nvecs = rtl8125_enable_msix(tp)) > 0)
@@ -12318,7 +12319,7 @@ static int rtl8125_try_msi(struct rtl8125_private *tp)
                 dev_info(&pdev->dev, "no MSI/MSI-X. Back to INTx.\n");
 
         if (!(msi & RTL_FEATURE_MSIX) || nvecs < 1)
-                nvecs = 1;
+                nvecs = 2;
 
         tp->irq_nvecs = nvecs;
 
