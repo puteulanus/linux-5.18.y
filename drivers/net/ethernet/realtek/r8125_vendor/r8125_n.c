@@ -15433,7 +15433,9 @@ static irqreturn_t rtl8125_interrupt_msix(int irq, void *dev_instance)
                 rtl8125_clear_hw_isr_v2(tp, message_id);
 
                 //link change
-                if (message_id == 19) {
+                printk(KERN_INFO "message_id: %d\n",
+                               message_id);
+                if (message_id == 21) {
                         rtl8125_schedule_linkchg_work(tp);
                         break;
                 }
