@@ -10549,7 +10549,7 @@ rtl8125_init_software_variable(struct net_device *dev)
         case CFG_METHOD_6:
         case CFG_METHOD_7:
         default:
-                tp->use_timer_interrrupt = FALSE;
+                tp->use_timer_interrrupt = TRUE;
                 break;
         }
 
