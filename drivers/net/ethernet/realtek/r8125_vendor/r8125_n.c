@@ -10549,7 +10549,7 @@ rtl8125_init_software_variable(struct net_device *dev)
         case CFG_METHOD_6:
         case CFG_METHOD_7:
         default:
-                tp->use_timer_interrrupt = TRUE;
+                tp->use_timer_interrrupt = FALSE;
                 break;
         }
 
@@ -12931,6 +12931,8 @@ static int rtl8125_alloc_irq(struct rtl8125_private *tp)
         if (tp->features & RTL_FEATURE_MSIX &&
             tp->HwCurrIsrVer == 2) {
                 for (i=0; i<tp->irq_nvecs; i++) {
+                        printk(KERN_INFO "set handler for irq %d\n",
+                               i);
                         irq = &tp->irq_tbl[i];
                         irq->handler = rtl8125_interrupt_msix;
                         r8125napi = &tp->r8125napi[i];
@@ -15419,6 +15421,8 @@ static irqreturn_t rtl8125_interrupt_msix(int irq, void *dev_instance)
         struct rtl8125_private *tp = r8125napi->priv;
         struct net_device *dev = tp->dev;
         int message_id = r8125napi->index;
+        printk(KERN_INFO "message_id: %d\n",
+                               message_id);
 #ifndef CONFIG_R8125_NAPI
         u32 budget = ~(u32)0;
 #endif
@@ -15433,8 +15437,6 @@ static irqreturn_t rtl8125_interrupt_msix(int irq, void *dev_instance)
                 rtl8125_clear_hw_isr_v2(tp, message_id);
 
                 //link change
-                printk(KERN_INFO "message_id: %d\n",
-                               message_id);
                 if (message_id == 21) {
                         rtl8125_schedule_linkchg_work(tp);
                         break;
