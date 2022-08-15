@@ -451,7 +451,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 #define R8125_PCI_REGS_SIZE  	(0x100)
 #define R8125_NAPI_WEIGHT   64
 
-#define R8125_MAX_MSIX_VEC_8125B   21
+#define R8125_MAX_MSIX_VEC_8125B   19
 #define R8125_MIN_MSIX_VEC_8125B   1
 #define R8125_MAX_MSIX_VEC   32
 #define R8125_MAX_RX_QUEUES_VEC_V3 (16)
