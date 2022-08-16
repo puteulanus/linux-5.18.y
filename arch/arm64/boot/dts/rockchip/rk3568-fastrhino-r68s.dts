@@ -654,9 +654,9 @@
 // 	status = "okay";
 // };
 
-&rng {
- 	status = "okay";
-};
+// &rng {
+//  	status = "okay";
+// };
 
 // &dfi {
 // 	status = "okay";
