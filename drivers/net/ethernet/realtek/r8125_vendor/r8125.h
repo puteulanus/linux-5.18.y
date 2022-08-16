@@ -451,7 +451,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 #define R8125_PCI_REGS_SIZE  	(0x100)
 #define R8125_NAPI_WEIGHT   64
 
-#define R8125_MAX_MSIX_VEC_8125B   12
+#define R8125_MAX_MSIX_VEC_8125B   8
 #define R8125_MIN_MSIX_VEC_8125B   1
 #define R8125_MAX_MSIX_VEC   32
 #define R8125_MAX_RX_QUEUES_VEC_V3 (16)
@@ -1484,9 +1484,9 @@ enum RTL8125_register_content {
         INT_CFG0_TIMEOUT0_BYPASS_8125 = (1 << 1),
         INT_CFG0_MITIGATION_BYPASS_8125 = (1 << 2),
         ISRIMR_V2_ROK_Q0     = (1 << 0),
-        ISRIMR_TOK_Q0        = (1 << 5),
-        ISRIMR_TOK_Q1        = (1 << 7),
-        ISRIMR_V2_LINKCHG    = (1 << 10),
+        ISRIMR_TOK_Q0        = (1 << 2),
+        ISRIMR_TOK_Q1        = (1 << 4),
+        ISRIMR_V2_LINKCHG    = (1 << 7),
 
         /* Magic Number */
         RTL8125_MAGIC_NUMBER = 0x0badbadbadbadbadull,
